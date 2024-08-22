@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD TICKET</title>
+    <link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+			crossorigin="anonymous"
+    />
+</head>
+<body>
+    <h1 class="text-center text-success">
+          ADD SCHEDULES
+    </h1>
+    <div class="container">
+        {% if err %}
+        <div class="alert alert-danger">
+            {{ err }}
+        </div>
+        {% endif %}
+        <form action="/ticket/add" method="POST">
+
+            <!--       ++++++++++     -->
+            <div class="form-group">
+                <label>Airport Id</label>
+                <select class="form-control" name="routes_info_airport_id">
+                    {% for air in airports %}
+                    <option value="{{ air.id }}"{% if air.id==flight.routes_info_airport_id %}selected{% endif %}>
+                        {{ air.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Routes Id</label>
+                <select class="form-control" name="routes_info_routes_id">
+                    {% for rou in routes %}
+                    <option value="{{ rou.id }}"{% if rou.id==flight.routes_info_routes_id %}selected{% endif %}>
+                        {{ rou.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Airport Role</label>
+                <select class="form-control" name="routes_info_airport_role">
+                    <option>DEPARTURE</option>
+                    <option>ARRIVAL</option>
+                    <option>INTERMEDIATE</option>
+                </select>
+            </div>
+
+            <!--       ++++++++++     -->
+            <div class="form-group">
+                <label>Flight Id</label>
+                <select class="form-control"  name="flight_details_flight_id">
+                    {% for fli in flights %}
+                    <option value="{{ fli.id }}"{% if fli.id==flight.flight_details_flight_id %}selected{% endif %}>
+                         {{ fli.flight_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Flight Schedules</label>
+                <select class="form-control"  name="flight_details_flight_schedule_id">
+                    {% for sche in  flight_schedules %}
+                    <option value="{{ sche.id }}"
+                            {% if sche.id==flight.flight_details_flight_schedule_id %}selected{% endif %}>
+                        {{ sche.id }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Time</label>
+                 <input type="text" id="datetimeInput" name="flight_details_time"
+                        class="form-control" value="{{ flight.flight_details_time }}" />
+            </div>
+
+            <div class="form-group">
+                <label>Flight Duration</label>
+                <input type=text id="textInput" step="0.01" onchange="convertToFloat()"
+                       name="flight_details_duration" class="form-control" value="{{ flight.flight_duration }}">
+            </div>
+
+            <div class="form-group">
+                <label>Num Of Seats 1st</label>
+                <input type=number name="flight_details_seats_1st_class"
+                       class="form-control" value="{{ flight.flight_details_empty_seats_1st_class }}"/>
+            </div>
+
+
+            <div class="form-group">
+                <label>Num Of Seats 2st</label>
+                <input type=number name="flight_details_seats_2st_class"
+                       class="form-control" value="{{ flight.flight_details_empty_seats_2st_class }}"/>
+            </div>
+
+
+            <div class="form-group" style="padding:20px">
+                <input type="submit" value="{% if request.args.get('flight_detail_id') %} Update {% else %} Add {% endif %}Flight" class="btn btn-danger">
+            </div>
+
+        </form>
+    </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script>
+$(document).ready(function(){
+    $('#datetimeInput').datetimepicker({
+        format: 'Y-m-d H:i:s',
+        step: 1,
+        showSecond: true,
+        timepicker: true,
+        datepicker: true
+    });
+});
+</script>
+</body>
+
+</html>

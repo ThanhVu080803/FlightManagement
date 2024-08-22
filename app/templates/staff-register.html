@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+		/>
+		<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+<div class="login">
+    <div>
+        <form action="/staff/register" method="POST"  class="form_login_register">
+            <div class="mb-3 mt-3 form_register--name">
+                <div class="mb-3 mt-3 form_register--surname">
+                    <label for="surname" class="form-label">Surname:</label>
+                    <input type="text" class="form-control" id="surname" placeholder="Enter surname" name="surname">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="firstname" class="form-label">Middle Name & First Name:</label>
+                     <input type="text" class="form-control" id="firstname" placeholder="Enter Middle Name & First Name" name="firstname">
+                </div>
+            </div>
+            <div class="mb-3 mt-3 form_register--name">
+                <div class="mb-3 mt-3 form_register--surname">
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter Number Phone" name="phone">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="address" class="form-label">Address:</label>
+                     <input type="text" class="form-control" id="address" placeholder="Enter Address" name="address">
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            </div>
+            <div class="mb-3">
+              <label for="pwd" class="form-label">Password:</label>
+              <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="pwd">Confirm password</label>
+                <input id="confirm" name="confirm" required type="confirm" placeholder="Enter password" class="form-control mt-2">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

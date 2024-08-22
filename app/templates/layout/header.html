@@ -1,0 +1,32 @@
+<header class="header">
+	<div class="header--left">
+		<img src="/static/images/logo.png" alt="logo" class="logo" />
+		My <span>Airline</span>
+	</div>
+	<div class="header--right">
+		<div class="top">
+			{% if current_user.is_authenticated %}
+			<a type="submit" class="btn--log header--log-out btn-top" href="{{ url_for('logout') }}">
+				Thoát
+			</a>
+		    {% else %}
+			<a type="submit" class="btn--log header--log-on btn-top" href="{{ url_for('register') }}">
+				Đăng kí
+			</a>
+			<a type="submit" class="btn--log header--register btn-top" href="{{ url_for('login') }}">
+				Đăng nhập
+			</a>
+			{% endif %}
+		</div>
+		<div class="bottom">
+			<nav class="services">
+				<ul class="header--nav" id="navjs">
+					<li><a href="">Tra cứu chuyến bay</a></li>
+					<li><a href="">Tin tức</a></li>
+					<li><a href="">Dịch vụ khác</a></li>
+					<li><a href="">Liên hệ</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</header>

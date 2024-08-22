@@ -1,0 +1,217 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Trang chủ {% endblock %}
+
+{% block content %}
+<!-- Slider -->
+<div class="slider">
+	<div class="slider-content">
+		<div class="slider--item">
+			<div class="desc">
+				<h1>Hà Nội</h1>
+				<span>Thủ đô của Việt Nam</span>
+			</div>
+		</div>
+		<div class="slider--item">
+			<div class="desc">
+				<h1>Đà Nẵng</h1>
+				<span>Thành phố Đà Nẵng</span>
+			</div>
+		</div>
+		<div class="slider--item">
+			<div class="desc">
+				<h1>Thành phố Hồ Chí Minh</h1>
+				<span>Thành phố năng động</span>
+			</div>
+		</div>
+	</div>
+</div>
+<button type="button" class="btn book" data-bs-toggle="modal" data-bs-target="#myModal">Book a tickets</button>
+<!-- End slider -->
+
+<!--Book Ticket Modal-->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content">
+
+	  <!-- Modal Header -->
+	  <div class="modal-header">
+		  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		  <h4 class="modal-title">Đặt vé <i class="fa-solid fa-ticket"></i> </h4>
+	  </div>
+
+	  <!-- Modal body -->
+	  <div class="modal-body">
+		<div class="nav modal-header-btn">
+			<li class="nav-item one-way active-modal-header faded" onclick="toggleActiveModal(this)">Khứ hồi</li>
+			<li class="nav-item round-trip faded" onclick="toggleActiveModal(this)">Một chiều</li>
+		</div>
+		<div class="tab-content">
+			<div class="container active"><br>
+			  <form class="row g-2 justify-content-around" method="POST" action="/bookticket">
+				  <div class="form-group col-5">
+					<label for="departure">Điểm đi</label>
+					<select id="departure" name="departure">
+					  	{% for i in range(0, locations|length) %}
+							<option value="{{ locations[i].id }}">{{locations[i].id ~ ' - ' ~ locations[i].name}}</option>
+						{% endfor %}
+					</select>
+				  </div>
+				  <div class="form-group col-5">
+					<label for="destination">Điểm đến</label>
+					<select id="destination" name="destination">
+					  	{% for i in range(0, locations|length) %}
+							<option value="{{ locations[i].id }}">{{locations[i].id ~ ' - ' ~ locations[i].name}}</option>
+						{% endfor %}
+					</select>
+				  </div>
+					<div class="form-group quantity-input col-2">
+						<label for="quantity-tickets">Số lượng vé</label>
+						<div class="quantity-input">
+							<button type="button" class="quantity-btn" onclick="quantityTickets('decrease')">-</button>
+							<input id="quantity-tickets" name="quantity-tickets" type="number" value="0" min="0" max="9" readonly/>
+							<button type="button" class="quantity-btn" onclick="quantityTickets('increase')">+</button>
+						</div>
+					</div>
+				  <div class="form-group col-6">
+					<label for="departure-date">Ngày đi</label>
+					<input type="date" class="form-control" id="departure-date" name="departure-date" placeholder="Điểm đi">
+				  </div>
+				  <div class="form-group col-6">
+					  <label for="return-date">Ngày về</label>
+					  <input type="date" class="form-control" id="return-date" name="return-date" placeholder="Điểm đến">
+				  </div>
+				  <!-- Modal footer -->
+				  <div class="modal-footer">
+					<button class="btn book-ticket-btn" type="submit">Tìm vé</button>
+				  </div>
+			  </form>
+			</div>
+	  	</div>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<!-- Services -->
+<section class="services py-5" id="services">
+	<!--Start Container-->
+	<div class="container">
+		<h3 class="service-title">Our Services</h3>
+
+		<!--start the services boxes-->
+		<div class="the-services-boxes">
+			<div class="row">
+				<div class="service col-xl">
+					<span
+						><i class="fas fa-ticket-alt fa-2x"></i
+					></span>
+					<div>
+						<h4>
+							Book your ticket in the fastest way
+							possible
+						</h4>
+						<p>
+							Lorem ipsum dolor sit amet consectetur
+							adipisicing elit. Eos soluta, nisi
+							temporibus perferendis ullam officia
+							aspernatur?
+						</p>
+					</div>
+				</div>
+				<div class="service col-xl">
+					<span
+						><i class="fas fa-fighter-jet fa-2x"></i
+					></span>
+					<div>
+						<h4>
+							Travel through more than 300 countries
+							around the world
+						</h4>
+						<p>
+							Lorem ipsum dolor sit amet consectetur
+							adipisicing elit. Eos soluta, nisi
+							temporibus perferendis ullam officia
+							aspernatur?
+						</p>
+					</div>
+				</div>
+				<div class="service col-xl">
+					<span
+						><i class="fas fa-plane-slash fa-2x"></i
+					></span>
+					<div>
+						<h4>
+							Flexibility to cancel the flight at any
+							time
+						</h4>
+						<p>
+							Lorem ipsum dolor sit amet consectetur
+							adipisicing elit. Eos soluta, nisi
+							temporibus perferendis ullam officia
+							aspernatur?
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="service col-xl">
+					<span
+						><i class="far fa-money-bill-alt fa-2x"></i
+					></span>
+					<div>
+						<h4>
+							The cheapest airline ticket for you in
+							the world
+						</h4>
+						<p>
+							Lorem ipsum dolor sit amet consectetur
+							adipisicing elit. Eos soluta, nisi
+							temporibus perferendis ullam officia
+							aspernatur?
+						</p>
+					</div>
+				</div>
+				<div class="service col-xl">
+					<span
+						><i class="fas fa-envelope-square fa-2x"></i
+					></span>
+					<div>
+						<h4>
+							The fastest way to communicate with the
+							customer once he has booked his ticket
+						</h4>
+						<p>
+							Lorem ipsum dolor sit amet consectetur
+							adipisicing elit. Eos soluta, nisi
+							temporibus perferendis ullam officia
+							aspernatur?
+						</p>
+					</div>
+				</div>
+				<div class="service col-xl">
+					<span
+						><i class="fas fa-user-friends fa-2x"></i
+					></span>
+					<div>
+						<h4>
+							Professional crew at the highest level
+							will provide a comfortable trip for you
+						</h4>
+						<p>
+							Lorem ipsum dolor sit amet consectetur
+							adipisicing elit. Eos soluta, nisi
+							temporibus perferendis ullam officia
+							aspernatur?
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End the services boxes-->
+	</div>
+	<!--End Container-->
+</section>
+<!-- End services -->
+{% endblock%}
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>FLIGHT SCHEDULE MANAGEMENT</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
+
+		<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+
+
+<header class="header">
+	<div class="header--left">
+		<img src="/static/images/logo.png" alt="logo" class="logo" />
+		My <span>Airline</span>
+	</div>
+	<div class="header--right">
+		<div class="top">
+			{% if current_user.is_authenticated %}
+
+            <div style="color:#337ab7 ; padding-right: 10px" > Hi {{ current_user.firstname }} !</div>
+			<a type="submit" style="color:#337ab7" class="btn--log header--log-out btn-top" href="{{ url_for('staff_logout') }}">
+				Logout
+			</a>
+
+			{% endif %}
+		</div>
+	</div>
+</header>
+
+<body>
+<br/>
+<div class="container">
+    <h2 align="center" style="color:#337ab7">FLIGHT SCHEDULE MANAGEMENT</h2>
+    <br/>
+    <form class="row" method="get" action="{{url_for('ticket')}}">
+        <div class="col-md-2">
+            <select class="form-control" name="airport_id">
+                {% for air in airports %}
+                <option value="{{ air.id }}"> {{ air.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type=text name="from_date" id="From" class="form-control" placeholder="From Date"/>
+        </div>
+        <div class="col-md-2">
+            <input type=text name="to_date" id="to" class="form-control" placeholder="To Date"/>
+        </div>
+        <div class="col-md-8" style="padding-top: 10px">
+            <input type=submit name="range" id="range" value="Search" class="btn btn-success"/>
+        </div>
+
+        <div class="clearfix"></div>
+        <br/>
+    </form>
+
+    <h4>
+        <button type="button" class="btn btn-info ">
+            <a href="{{ url_for('add_or_update_ticket') }}">ADD SCHEDULES</a>
+        </button>
+    </h4>
+
+    <div id="purchase_order">
+        <table class="table table-bordered">
+            <tr>
+                <th width="5%">Airport</th>
+                <th width="15%">Routes</th>
+                <th width="10%">Flight</th>
+                <th width="15%">TIME</th>
+                <th width="15%">Flight Duration</th>
+                <th width="10%">Num Of Seats 1st</th>
+                <th width="10%">Num Of Seats 2st</th>
+                <th width="25%">Type Airport</th>
+            </tr>
+            {% for row in flights %}
+            <tr>
+                <td>{{ row.routes_info_airport_id }}</td>
+                <td>{{ row.route_name }}</td>
+                <td>{{ row.flight_name }}</td>
+                <td>{{ row.flight_details_time }}</td>
+                <td>{{ row.flight_details_duration }} hours</td>
+                <td>{{ row.flight_details_seats_1st_class }} seats</td>
+                <td>{{ row.flight_details_seats_2st_class }} seats</td>
+                <td>{{ row.routes_info_airport_role }}</td>
+                <td>
+                    <a href="{{ url_for('update_ticket_by_id', flight_details_id=row.flight_details_id) }}">Update</a>
+                    <a href="{{ url_for('delete_ticket_by_id', flight_details_id=row.flight_details_id) }}" onclick="return confirmDelete()">Delete</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<script>
+$(document).ready(function(){
+    $.datetimepicker.setDefaults({
+        format: 'Y-m-d H:i:s',
+        step: 1,
+        showSecond: true,
+        timepicker: true,
+        datepicker: true
+    });
+    $(function(){
+        $("#From").datetimepicker();
+        $("#to").datetimepicker();
+    });
+    $('#range').click(function(){
+        var From = $('#From').val();
+        var to = $('#to').val();
+    });
+});
+
+
+    function confirmDelete(flightDetailsId) {
+        if (confirm('Are you sure you want to delete this ticket?')) {
+            // Update the form action with the flight_details_id
+            document.getElementById('deleteForm').action = '/ticket/delete/' + flightDetailsId;
+            // Submit the form
+            document.getElementById('deleteForm').submit();
+        }
+    }
+</script>
+</body>
+</html>
+

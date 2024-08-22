@@ -1,0 +1,71 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Đặt vé {% endblock %}
+
+{% block content %}
+<style>
+  header.header{
+    position: relative;
+    background-color: #02c39a;
+  }
+</style>
+<div class="container">
+  {% if departure_flight_data == [] %}
+  <h2 class="text-center">
+    Không có chuyến bay nào !
+  </h2>
+  {% else %}
+  <h2 class="text-center">
+    {{departure_flight_data[0].route_name}}
+  </h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Mã chuyến bay</th>
+          <th scope="col">Thời gian cất cánh</th>
+          <th scope="col">Thời gian bay</th>
+          <th scope="col">Thương gia</th>
+          <th scope="col">Phổ thông</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for flight in departure_flight_data %}
+          <tr>
+            <th scope="row">{{flight.flight_id}}</th>
+            <td>{{flight.flight_details_time}}</td>
+            <td>{{flight.flight_details_duration}}</td>
+            {% if flight.flight_details_empty_seats_1st_class == 0 and flight.flight_id == t.flight_id%}
+            <td>Hết vé</td>
+            {% else %}
+              {% for t in ticket_info %}
+                  {% if flight.flight_id == t.flight_id and t.fare_class_id ==1 %}
+                    <td>
+                      <a class="ticket-price"
+                           href="{{url_for('load_form_passenger', flight_id=flight.flight_id, plane_id=flight.flight_plane_id, time=flight.flight_details_time, duration=flight.flight_details_duration, fare_class_id=t.fare_class_id, fare_class_price=t.fare_class_price, num_of_tickets=num_of_tickets )}}">
+                      {{ t.fare_class_price }}
+                      </a>
+                    </td>
+                  {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if flight.flight_details_empty_seats_2st_class == 0 and flight.flight_id == t.flight_id2%}
+            <td>Hết vé</td>
+            {% else %}
+              {% for t in ticket_info %}
+                  {% if flight.flight_id == t.flight_id and t.fare_class_id == 2 %}
+                    <td>
+                      <a class="ticket-price" href="{{url_for('load_form_passenger', flight_id=flight.flight_id, plane_id=flight.flight_plane_id, time=flight.flight_details_time, duration=flight.flight_details_duration, fare_class_id=t.fare_class_id, fare_class_price=t.fare_class_price, num_of_tickets=num_of_tickets )}}">
+                        {{ t.fare_class_price }}
+                      </a>
+                    </td>
+                  {% endif %}
+              {% endfor %}
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock%}
